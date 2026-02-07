@@ -333,13 +333,16 @@
       alert("⚠️ Please enter patient age");
       return;
     }
+    if (age < 0 || age > 120) {
+      alert("⚠️ Age must be between 0 and 120");
+      return;
+    }
 
     if (!symptoms.trim()) {
       alert("⚠️ Please enter symptoms or incident details");
       return;
     }
-
-    // عدلي الرابط حسب استضافة باكندك (مثلا http://localhost:5000 أو رابط الريموت)
+    
     const apiURL = `http://127.0.0.1:5000/decision?age=${age}&gender=${gender}&chronic_diseases=${chronic}&symptoms=${encodeURIComponent(symptoms)}&incident_type=${incidentType}&location=${city}&closed_roads=${closedRoad}`;
 
     const resultBox = document.getElementById("resultBox");

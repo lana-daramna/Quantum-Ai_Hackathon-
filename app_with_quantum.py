@@ -23,7 +23,7 @@ class QuantumOptimizer:
     - Annealing (temperature + cooling)
     - Tunneling-like non-greedy behavior
 
-    NOTE:
+    -NOTE:
     This is quantum-inspired, not real quantum computing.
     """
 
@@ -194,11 +194,11 @@ def get_city_accident_risk(city):
                 if row["city"].lower() == city.lower():
                     level = row["accident_level"]
                     if level == "high":
-                        return 0.25
+                        return 0.08
                     elif level == "medium":
-                        return 0.15
-                    elif level == "low":
                         return 0.05
+                    elif level == "low":
+                        return 0.02
     except:
         pass
     return 0.0

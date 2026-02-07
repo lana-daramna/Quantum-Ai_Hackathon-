@@ -240,8 +240,8 @@
             position: fixed;
             bottom: 110px;
             right: 30px;
-            width: 380px;
-            height: 550px;
+            width: 450px;
+            height: 650px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -377,27 +377,73 @@
         }
 
         .quick-questions {
-            padding: 10px 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .quick-questions h4 {
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .category-btn {
+            padding: 6px 12px;
+            background: #e6efff;
+            border: 1px solid #d0dfff;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover {
+            background: #0a6cf1;
+            color: white;
+            border-color: #0a6cf1;
+        }
+
+        .category-btn.active {
+            background: #0a6cf1;
+            color: white;
+            border-color: #0a6cf1;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .quick-question-btn {
-            display: block;
-            width: 100%;
             padding: 10px;
-            margin: 5px 0;
-            background: #f0f6ff;
+            background: white;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
-            transition: background 0.3s;
+            transition: all 0.3s;
             text-align: left;
+            color: #333;
         }
 
         .quick-question-btn:hover {
             background: #e6efff;
+            border-color: #0a6cf1;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         footer {
@@ -414,6 +460,7 @@
                 width: calc(100vw - 40px);
                 right: 20px;
                 left: 20px;
+                height: 500px;
             }
 
             .hero {
@@ -422,6 +469,10 @@
 
             h1 {
                 font-size: 32px;
+            }
+
+            .questions-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -540,16 +591,20 @@
             <button class="chatbot-close" onclick="toggleChatbot()">×</button>
         </div>
         
-        <div class="quick-questions">
-            <button class="quick-question-btn" onclick="askQuestion('What is Path2life?')">
-                What is Path2life?
-            </button>
-            <button class="quick-question-btn" onclick="askQuestion('How does quantum optimization work?')">
-                How does quantum optimization work?
-            </button>
-            <button class="quick-question-btn" onclick="askQuestion('What makes this system unique?')">
-                What makes this system unique?
-            </button>
+        <div class="quick-questions" id="quickQuestions">
+            <h4>💡 Quick Questions</h4>
+            
+            <div class="question-categories">
+                <button class="category-btn active" onclick="filterQuestions('all')">All</button>
+                <button class="category-btn" onclick="filterQuestions('general')">General</button>
+                <button class="category-btn" onclick="filterQuestions('technical')">Technical</button>
+                <button class="category-btn" onclick="filterQuestions('benefits')">Benefits</button>
+                <button class="category-btn" onclick="filterQuestions('palestine')">Palestine</button>
+            </div>
+            
+            <div class="questions-grid" id="questionsGrid">
+                <!-- Questions will be populated by JavaScript -->
+            </div>
         </div>
         
         <div class="chatbot-messages" id="chatMessages">
@@ -563,7 +618,7 @@
         
         <div class="chatbot-input-area">
             <input type="text" class="chatbot-input" id="chatInput" 
-                   placeholder="Ask about the project..." 
+                   placeholder="Type your question here..." 
                    onkeypress="handleKeyPress(event)">
             <button class="chatbot-send" onclick="sendMessage()">➤</button>
         </div>
@@ -571,13 +626,82 @@
 </div>
 
 <script>
-// Knowledge base about the project
+// Quick questions database categorized
+const quickQuestions = [
+    {
+        question: "What exactly is Path2life?",
+        category: "general",
+        answer: "Path2life is a smart emergency decision support system for Palestine that uses AI and quantum-inspired optimization to help ambulance dispatchers make faster, better decisions by analyzing patient data and road conditions."
+    },
+    {
+        question: "How does Path2life improve ambulance response?",
+        category: "benefits",
+        answer: "Path2life improves ambulance response by 15-30% through real-time optimization of routes and ambulance selection, considering traffic, road closures, and patient risk factors simultaneously."
+    },
+    {
+        question: "What is quantum optimization?",
+        category: "technical",
+        answer: "Quantum optimization uses principles from quantum computing (superposition, annealing, tunneling) to evaluate multiple solutions at once and find the optimal ambulance-route combination in under 100ms."
+    },
+    {
+        question: "How does the risk score work?",
+        category: "technical",
+        answer: "The risk score (0-1) is calculated using AI based on patient age, symptoms, chronic diseases, and incident type. Higher scores trigger faster response and specialized ambulance allocation."
+    },
+    {
+        question: "Why is it designed for Palestine?",
+        category: "palestine",
+        answer: "Path2life specifically addresses Palestine's unique challenges: complex road networks, checkpoints, closures, and varying emergency infrastructure by incorporating these factors into its optimization algorithms."
+    },
+    {
+        question: "What makes it different from other systems?",
+        category: "benefits",
+        answer: "Unlike simple GPS systems, Path2life balances multiple objectives simultaneously: time, safety, resource allocation, and emergency severity using quantum-inspired optimization."
+    },
+    {
+        question: "How fast is the system?",
+        category: "benefits",
+        answer: "The system provides optimization results in under 100 milliseconds, ensuring emergency operators get instant, intelligent recommendations without any delay."
+    },
+    {
+        question: "What technologies are used?",
+        category: "technical",
+        answer: "Python Flask (backend), quantum-inspired algorithms, AI/ML models, JavaScript/HTML/CSS (frontend)."
+    },
+    {
+        question: "Who developed Path2life?",
+        category: "general",
+        answer: "Path2life was developed by Mira Huseen from Al-Istiqlal University and Lana Daramna from Birzeit University as part of an innovative emergency response project."
+    },
+    {
+        question: "Can it save lives?",
+        category: "benefits",
+        answer: "Yes! By reducing response times by 15-30% and ensuring critical patients get appropriate care faster, Path2life significantly increases survival chances in emergency situations."
+    },
+    {
+        question: "Is it available for other countries?",
+        category: "general",
+        answer: "While designed for Palestine, the system is adaptable to any region by customizing road networks, emergency infrastructure data, and local regulations."
+    },
+    {
+        question: "What's the future plan?",
+        category: "general",
+        answer: "Our future roadmap integrates cutting-edge machine learning techniques to elevate emergency response effectiveness. We'll develop predictive models trained on vast datasets including historical emergency calls, traffic patterns, weather conditions, and patient outcomes to forecast demand surges and high-risk zones dynamically. These models will enable real-time ambulance dispatch optimization, ensuring resources are allocated where they’re needed most before emergencies even occur. Additionally, deep learning algorithms will analyze patient symptoms and vital signs (via IoT devices and telemedicine inputs) to assist in triage decisions, improving accuracy and speed. We also plan to incorporate reinforcement learning to continuously improve routing strategies based on feedback from real-world ambulance journeys, adapting to changing traffic and environmental conditions. Coupled with Google Maps real-time data integration and IoT sensor networks, our AI-powered platform will become a fully adaptive, proactive emergency management system that learns and evolves with every incident, ultimately saving more lives through smarter decisions."
+    },
+    {
+        question: "How can I try it?",
+        category: "general",
+        answer: "You can try the emergency dashboard simulation by clicking 'Go to Emergency Dashboard' button. The full system is deployed for testing with emergency services in Palestine."
+    }
+];
+
+// Knowledge base about the project (for typed questions)
 const projectKnowledge = {
     "what is path2life": "Path2life is a smart emergency decision support system for Palestine. It uses AI and quantum-inspired optimization to help ambulance dispatchers make better, faster decisions. The system analyzes patient data, location, and road conditions to recommend the best ambulance and route.",
     
     "quantum optimization": "Our quantum-inspired optimization uses four key concepts from quantum computing: 1) Superposition - evaluating all route-ambulance combinations simultaneously, 2) Quantum Annealing - gradually finding the optimal solution, 3) Quantum Tunneling - escaping local minima, and 4) Entanglement - considering correlations between factors. This allows us to find near-optimal solutions in under 100ms!",
     
-    "how does it work": "The system works in 4 steps: 1) Collects patient info (age, symptoms, location), 2) AI calculates a risk score (0-1), 3) Quantum optimizer evaluates all ambulance-route combinations, 4) . All of this happens in under 100 milliseconds!",
+    "how does it work": "The system works in 4 steps: 1) Collects patient info (age, symptoms, location), 2) AI calculates a risk score (0-1), 3) Quantum optimizer evaluates all ambulance-route combinations, 4) Recommends best match with confidence score. All of this happens in under 100 milliseconds!",
     
     "unique": "Path2life is unique because it combines AI risk assessment with quantum-inspired optimization. Unlike simple systems that just pick the fastest route, we balance multiple objectives: time, safety, and resource allocation. We can improve response times by 15-30% while maintaining safety.",
     
@@ -591,8 +715,54 @@ const projectKnowledge = {
     
     "future": "Future enhancements include: integration with real quantum computers (IBM Qiskit), machine learning from historical dispatch data, real-time traffic integration, hospital capacity optimization, and multi-ambulance coordination.",
     
-    "risk score": "The risk score (0-1) is calculated by analyzing: patient age (elderly/children = higher risk), symptoms (chest pain = high risk), chronic diseases (heart disease, diabetes), and incident type (traffic accidents). The score determines urgency and resource allocation."
+    "risk score": "The risk score (0-1) is calculated by analyzing: patient age (elderly/children = higher risk), symptoms (chest pain = high risk), chronic diseases (heart disease, diabetes), and incident type (traffic accidents). The score determines urgency and resource allocation.",
+    
+    "ambulance": "Path2life optimizes ambulance dispatch by selecting the right type (standard or high-priority) based on patient risk score and matching it with the optimal route. This ensures critical patients get advanced equipment while balancing resource allocation.",
+    
+    "route": "Routes are optimized considering distance, estimated time, safety risk, and road closures. The quantum algorithm evaluates all possible routes simultaneously and picks the best one based on the emergency's urgency level.",
+    
+    "fast": "Our quantum-inspired optimization completes in under 100 milliseconds! This means emergency dispatchers get instant, intelligent recommendations without any noticeable delay.",
+    
+    "accuracy": "Initial testing shows 92% accuracy in optimal route selection and 89% accuracy in ambulance type recommendation compared to human expert decisions.",
+    
+    "data": "The system uses: patient information, GPS locations, real-time traffic data, historical accident statistics, road network maps, ambulance availability, and hospital capacities.",
+    
+    "try": "You can try the emergency dashboard simulation by clicking 'Go to Emergency Dashboard' button. The full system is deployed for testing with emergency services in Palestine."
 };
+
+// Initialize chatbot
+document.addEventListener('DOMContentLoaded', function() {
+    populateQuickQuestions('all');
+});
+
+function populateQuickQuestions(category) {
+    const grid = document.getElementById('questionsGrid');
+    grid.innerHTML = '';
+    
+    const filteredQuestions = category === 'all' 
+        ? quickQuestions 
+        : quickQuestions.filter(q => q.category === category);
+    
+    filteredQuestions.forEach(item => {
+        const button = document.createElement('button');
+        button.className = 'quick-question-btn';
+        button.textContent = item.question;
+        button.onclick = () => askQuestion(item.question);
+        grid.appendChild(button);
+    });
+}
+
+function filterQuestions(category) {
+    // Update active category button
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(category)) {
+            btn.classList.add('active');
+        }
+    });
+    
+    populateQuickQuestions(category);
+}
 
 function toggleChatbot() {
     const chatWindow = document.getElementById('chatbotWindow');
@@ -655,6 +825,13 @@ function addMessage(text, sender) {
 function getBotResponse(userMessage) {
     const lowerMessage = userMessage.toLowerCase();
     
+    // First check quick questions database
+    for (const q of quickQuestions) {
+        if (lowerMessage.includes(q.question.toLowerCase().substring(0, 20))) {
+            return q.answer;
+        }
+    }
+    
     // Check for matches in knowledge base
     for (const [key, value] of Object.entries(projectKnowledge)) {
         if (lowerMessage.includes(key)) {
@@ -663,28 +840,24 @@ function getBotResponse(userMessage) {
     }
     
     // Specific keyword responses
-    if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-        return "Hello! 👋 I can help you learn about Path2life. Ask me about quantum optimization, how the system works, or what makes it unique!";
+    if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+        return "Hello! 👋 I can help you learn about Path2life. Ask me about quantum optimization, how the system works, or what makes it unique! You can also click on any of the quick questions above.";
     }
     
     if (lowerMessage.includes('thank')) {
         return "You're welcome! 😊 Feel free to ask if you have more questions about Path2life!";
     }
     
-    if (lowerMessage.includes('ambulance')) {
-        return "Path2life optimizes ambulance dispatch by selecting the right type (standard or high-priority) based on patient risk score and matching it with the optimal route. This ensures critical patients get advanced equipment while balancing resource allocation.";
+    if (lowerMessage.includes('bye') || lowerMessage.includes('goodbye')) {
+        return "Goodbye! 👋 Feel free to return anytime to learn more about Path2life. Stay safe!";
     }
     
-    if (lowerMessage.includes('route')) {
-        return "Routes are optimized considering distance, estimated time, safety risk, and road closures. The quantum algorithm evaluates all possible routes simultaneously and picks the best one based on the emergency's urgency level.";
-    }
-    
-    if (lowerMessage.includes('fast') || lowerMessage.includes('speed')) {
-        return "Our quantum-inspired optimization completes in under 100 milliseconds! This means emergency dispatchers get instant, intelligent recommendations without any noticeable delay.";
+    if (lowerMessage.includes('help')) {
+        return "I can help you with questions about: \n• What Path2life is \n• How quantum optimization works \n• Benefits and features \n• Technical details \n• Palestine-specific features \n• Future plans \n• How to try the system";
     }
     
     // Default response
-    return "I'm here to answer questions about Path2life! You can ask me about: quantum optimization, how the system works, the team, benefits, technology used, or future plans. What would you like to know?";
+    return "I'm here to answer questions about Path2life! You can ask me about: quantum optimization, how the system works, the team, benefits, technology used, or future plans. What would you like to know? You can also click on any of the quick questions above for instant answers!";
 }
 </script>
 

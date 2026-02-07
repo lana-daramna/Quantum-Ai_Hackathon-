@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Path2life</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(120deg, #eaf2ff, #f9fbff);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #0a6cf1;
+        }
+
+        h1 {
+            color: #0a6cf1;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 5px solid #14b8a6;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f6ff 0%, #e6efff 100%);
+            border-radius: 15px;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-img {
+            flex: 1;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .hero-img img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #0a6cf1;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            color: #0a6cf1;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .team {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .team h2 {
+            border-left-color: #e63946;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .team-member {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #0a6cf1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .team-member strong {
+            color: #333;
+            font-size: 20px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .team-member .affiliation {
+            color: #666;
+            font-style: italic;
+            font-size: 15px;
+        }
+
+        .quantum-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .quantum-section h2 {
+            color: white;
+            border-left-color: white;
+        }
+
+        .quantum-section p {
+            color: rgba(255,255,255,0.95);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(90deg, #0a6cf1, #14b8a6);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(10,108,241,0.3);
+        }
+
+        .btn-chat {
+            background: linear-gradient(90deg, #8b5cf6, #6366f1);
+        }
+
+        .btn-chat:hover {
+            box-shadow: 0 8px 20px rgba(139,92,246,0.3);
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.6);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #0a6cf1, #14b8a6);
+            color: white;
+        }
+
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 75%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #0a6cf1, #14b8a6);
+            color: white;
+        }
+
+        .chatbot-input-area {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chatbot-input:focus {
+            border-color: #667eea;
+        }
+
+        .chatbot-send {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.1);
+        }
+
+        .quick-questions {
+            padding: 10px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-question-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f6ff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.3s;
+            text-align: left;
+        }
+
+        .quick-question-btn:hover {
+            background: #e6efff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .chatbot-window {
+                width: calc(100vw - 40px);
+                right: 20px;
+                left: 20px;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🚑 About Path2life</h1>
+        <p class="subtitle">Smart Emergency Decision Support System for Palestine</p>
+    </header>
+
+    <div class="hero">
+        <div class="hero-text">
+            <p>
+                <strong>Path2life</strong> is an innovative emergency decision support system designed
+                to revolutionize ambulance dispatch and response efficiency in Palestine.
+                Using advanced AI and quantum-inspired optimization algorithms, the system assists 
+                emergency operators by analyzing medical and contextual data in real-time to recommend 
+                the most appropriate ambulance and optimal route.
+            </p>
+        </div>
+
+        <div class="hero-img">
+            <img src="Path2life.webp" 
+                 alt="Emergency response illustration">
+        </div>
+    </div>
+
+    <h2>🎯 What Does Path2life Do?</h2>
+    <div class="features">
+        <div class="feature-card">
+            <h3>📊 AI Risk Assessment</h3>
+            <p>Analyzes patient information such as age, symptoms, and chronic diseases to calculate a risk score (0-1 scale).</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🗺️ Location Analysis</h3>
+            <p>Considers contextual factors like location, road closures, and traffic conditions for optimal routing.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>⚛️ Quantum Optimization</h3>
+            <p>Uses quantum-inspired algorithms to find the best ambulance-route combination in under 100ms.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🚦 Historical Data Integration</h3>
+            <p>Integrates historical road accident data to enhance risk assessment and decision making.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📱 Real-time Decisions</h3>
+            <p>Provides instant ambulance dispatch decisions with detailed explanations and confidence scores.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎯 Multi-Objective Optimization</h3>
+            <p>Balances speed, safety, and resource allocation based on emergency severity.</p>
+        </div>
+    </div>
+
+    <div class="quantum-section">
+        <h2>⚛️ Quantum-Inspired Technology</h2>
+        <p>
+            Path2life uses cutting-edge quantum-inspired optimization algorithms that mimic the behavior 
+            of quantum computers. This allows the system to explore multiple route and ambulance combinations 
+            simultaneously, finding near-optimal solutions in milliseconds.
+        </p>
+        <p>
+            The system employs four key quantum concepts:
+        </p>
+        <ul style="margin-left: 20px; margin-top: 15px;">
+            <li style="margin-bottom: 10px;"><strong>Superposition:</strong> Evaluates all possibilities at once</li>
+            <li style="margin-bottom: 10px;"><strong>Quantum Annealing:</strong> Gradually converges to optimal solution</li>
+            <li style="margin-bottom: 10px;"><strong>Quantum Tunneling:</strong> Escapes local minima to find global optimum</li>
+            <li style="margin-bottom: 10px;"><strong>Entanglement:</strong> Considers correlations between risk, time, and resources</li>
+        </ul>
+    </div>
+
+    <div class="team">
+        <h2>👥 Project Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <strong>Mira Huseen</strong>
+                <span class="affiliation">جامعة الاستقلال (Al-Istiqlal University)</span>
+            </div>
+            
+            <div class="team-member">
+                <strong>Lana Daramna</strong>
+                <span class="affiliation">جامعة بيرزيت (Birzeit University)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="indexQuantum.html" class="btn">🚑 Go to Emergency Dashboard</a>
+        <a href="#" class="btn btn-chat" onclick="toggleChatbot(); return false;">💬 Ask About the Project</a>
+    </div>
+
+    <footer>
+        © 2026 Path2life – Smart Emergency Support for Palestine 🇵🇸
+    </footer>
+
+</div>
+
+<!-- Chatbot -->
+<div class="chatbot-container">
+    <button class="chatbot-button" onclick="toggleChatbot()">💬</button>
+    
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <span>🤖 Path2life Assistant</span>
+            <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+        </div>
+        
+        <div class="quick-questions">
+            <button class="quick-question-btn" onclick="askQuestion('What is Path2life?')">
+                What is Path2life?
+            </button>
+            <button class="quick-question-btn" onclick="askQuestion('How does quantum optimization work?')">
+                How does quantum optimization work?
+            </button>
+            <button class="quick-question-btn" onclick="askQuestion('What makes this system unique?')">
+                What makes this system unique?
+            </button>
+        </div>
+        
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    Hello! 👋 I'm the Path2life assistant. I can answer your questions about our emergency response system and quantum optimization technology. How can I help you?
+                </div>
+            </div>
+        </div>
+        
+        <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" id="chatInput" 
+                   placeholder="Ask about the project..." 
+                   onkeypress="handleKeyPress(event)">
+            <button class="chatbot-send" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Knowledge base about the project
+const projectKnowledge = {
+    "what is path2life": "Path2life is a smart emergency decision support system for Palestine. It uses AI and quantum-inspired optimization to help ambulance dispatchers make better, faster decisions. The system analyzes patient data, location, and road conditions to recommend the best ambulance and route.",
+    
+    "quantum optimization": "Our quantum-inspired optimization uses four key concepts from quantum computing: 1) Superposition - evaluating all route-ambulance combinations simultaneously, 2) Quantum Annealing - gradually finding the optimal solution, 3) Quantum Tunneling - escaping local minima, and 4) Entanglement - considering correlations between factors. This allows us to find near-optimal solutions in under 100ms!",
+    
+    "how does it work": "The system works in 4 steps: 1) Collects patient info (age, symptoms, location), 2) AI calculates a risk score (0-1), 3) Quantum optimizer evaluates all ambulance-route combinations, 4) . All of this happens in under 100 milliseconds!",
+    
+    "unique": "Path2life is unique because it combines AI risk assessment with quantum-inspired optimization. Unlike simple systems that just pick the fastest route, we balance multiple objectives: time, safety, and resource allocation. We can improve response times by 15-30% while maintaining safety.",
+    
+    "team": "Path2life is developed by Mira Huseen from Al-Istiqlal University and Lana Daramna from Birzeit University.",
+    
+    "benefits": "Key benefits include: 15-30% faster response times, optimization in under 100ms, adaptive to emergency severity, and multi-objective balancing of time, safety, and resources. This can save lives in critical situations!",
+    
+    "palestine": "Path2life is specifically designed for Palestine's unique challenges: complex road networks, checkpoints, closures, and varying emergency infrastructure. The system accounts for these factors in its optimization, making it ideal for the Palestinian context.",
+    
+    "technology": "We use Python Flask for the backend, quantum-inspired algorithms (annealing), AI risk assessment models, and real-time data processing. The frontend is HTML/CSS/JavaScript. The system can be deployed on any server and accessed via web browsers.",
+    
+    "future": "Future enhancements include: integration with real quantum computers (IBM Qiskit), machine learning from historical dispatch data, real-time traffic integration, hospital capacity optimization, and multi-ambulance coordination.",
+    
+    "risk score": "The risk score (0-1) is calculated by analyzing: patient age (elderly/children = higher risk), symptoms (chest pain = high risk), chronic diseases (heart disease, diabetes), and incident type (traffic accidents). The score determines urgency and resource allocation."
+};
+
+function toggleChatbot() {
+    const chatWindow = document.getElementById('chatbotWindow');
+    chatWindow.classList.toggle('active');
+    
+    if (chatWindow.classList.contains('active')) {
+        document.getElementById('chatInput').focus();
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+function askQuestion(question) {
+    document.getElementById('chatInput').value = question;
+    sendMessage();
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message
+    addMessage(message, 'user');
+    input.value = '';
+    
+    // Get bot response
+    setTimeout(() => {
+        const response = getBotResponse(message);
+        addMessage(response, 'bot');
+    }, 500);
+}
+
+function addMessage(text, sender) {
+    const messagesDiv = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = sender === 'bot' ? '🤖' : '👤';
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    content.textContent = text;
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    messagesDiv.appendChild(messageDiv);
+    
+    // Scroll to bottom
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function getBotResponse(userMessage) {
+    const lowerMessage = userMessage.toLowerCase();
+    
+    // Check for matches in knowledge base
+    for (const [key, value] of Object.entries(projectKnowledge)) {
+        if (lowerMessage.includes(key)) {
+            return value;
+        }
+    }
+    
+    // Specific keyword responses
+    if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+        return "Hello! 👋 I can help you learn about Path2life. Ask me about quantum optimization, how the system works, or what makes it unique!";
+    }
+    
+    if (lowerMessage.includes('thank')) {
+        return "You're welcome! 😊 Feel free to ask if you have more questions about Path2life!";
+    }
+    
+    if (lowerMessage.includes('ambulance')) {
+        return "Path2life optimizes ambulance dispatch by selecting the right type (standard or high-priority) based on patient risk score and matching it with the optimal route. This ensures critical patients get advanced equipment while balancing resource allocation.";
+    }
+    
+    if (lowerMessage.includes('route')) {
+        return "Routes are optimized considering distance, estimated time, safety risk, and road closures. The quantum algorithm evaluates all possible routes simultaneously and picks the best one based on the emergency's urgency level.";
+    }
+    
+    if (lowerMessage.includes('fast') || lowerMessage.includes('speed')) {
+        return "Our quantum-inspired optimization completes in under 100 milliseconds! This means emergency dispatchers get instant, intelligent recommendations without any noticeable delay.";
+    }
+    
+    // Default response
+    return "I'm here to answer questions about Path2life! You can ask me about: quantum optimization, how the system works, the team, benefits, technology used, or future plans. What would you like to know?";
+}
+</script>
+
+</body>
+</html>
